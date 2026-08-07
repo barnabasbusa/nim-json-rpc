@@ -47,12 +47,14 @@ proc build(args, path: string) =
 proc run(args, path: string) =
   build args & " --mm:refc -r", path
   if (NimMajor, NimMinor) > (1, 6):
-    build args & " --mm:orc -r", path
+    # TODO https://github.com/nim-lang/Nim/issues/26014
+    build args & " --mm:orc -d:useMalloc -r", path
 
 proc buildOnly(args, path: string) =
   build args & " --mm:refc", path
   if (NimMajor, NimMinor) > (1, 6):
-    build args & " --mm:orc", path
+    # TODO https://github.com/nim-lang/Nim/issues/26014
+    build args & " --mm:orc -d:useMalloc", path
 
 task test, "run tests":
   run "", "tests/all"
